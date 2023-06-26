@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="card-container">
+    <div class="card-button" style="margin-left: 270px; margin-top: -10px; width: 265px;">
+      <button id="addEmployeesButton" type="button" class="btn btn-secondary btn-lg" data-form-url="<%= new_employee_path %>">Add Employees</button>
+    </div>
+    <div class="card-button" style="margin-left: 10px; margin-top: 20px; width: 265px;">
+      <button id="addDepartmentButton" type="button" class="btn btn-secondary btn-lg" data-form-url="<%= new_department_path %>">Add Department</button>
+    </div>
+    <div class="card-button" style="margin-left: 10px; margin-top: -10px; width: 265px;">
+      <button id="addDesignationButton" type="button" class="btn btn-secondary btn-lg" data-form-url="<%= new_designation_path %>">Add Designation</button>
+    </div>
+    <div class="card-button" style="margin-left: 10px; margin-top: -10px; width: 265px;">
+      <button id="addBillsButton" type="button" class="btn btn-secondary btn-lg" data-form-url="<%= new_bill_path %>">Add Bills</button>
+    </div>
+  </div>
+  <div class="container-fluid col-8" style="margin-top: 30px; margin-left: 260px; margin-right: auto;">
+    <div class="card text-center" style="margin: 0 auto; width: 118%; float: left; border-radius: 10px;">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title" style="text-align: left;">Recent Bills</h5>
+          <button class="btn btn-secondary btn-sm" onclick="location.href='<%= bills_path %>'">View All</button>
+        </div>
+        <br>
+        <table class="table table-hover" style="border: 1px solid #000; border-radius: 10px; width: 100%;">
+          <thead>
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% c=0 %>
+            <% @bills.each do |bill|%>
+            <tr>
+              <% c+=1 %>
+              <th scope="row"><%= c %></th>
+              <td><%= bill.employee.first_name + ' '  + bill.employee.last_name %></td>
+              <td><%= bill.bill_type %></td>
+              <td><%= bill.amount %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateDepartmentName(departmentId) {
+      var departmentName = $('#' + departmentId).text();
+      $('#departmentName').val(departmentName);
+    }
+
+    function updateDesignationName(designationId) {
+      var designationName = $('#' + designationId).text();
+      $('#designationName').val(designationName);
+    }
+
+    function updateEmployeeName(employeeId) {
+      var employeeName = $('#' + employeeId).text();
+      $('#employeeName').val(employeeName);
+    }
+
+    $(document).ready(function() {
+      $('#addEmployeesButton').click(function() {
+        $('#addEmployeesModal').modal('show');
+      });
+
+      $('#addDepartmentButton').click(function() {
+        $('#addDepartmentModal').modal('show');
+      });
+
+      $('#addDesignationButton').click(function() {
+        $('#addDesignationModal').modal('show');
+      });
+
+      $('#addBillsButton').click(function() {
+        $('#addBillsModal').modal('show');
+      });
+
+      $('#closeEmployeeModalButton').click(function() {
+        $('#addEmployeesModal').modal('hide');
+      });
+      $('#closeDepartmentModalButton').click(function() {
+        $('#addDepartmentModal').modal('hide');
+      });
+      $('#closeDesignationModalButton').click(function() {
+        $('#addDesignationModal').modal('hide');
+      });
+      $('#closeBillsModalButton').click(function() {
+        $('#addBillsModal').modal('hide');
+      });
+
+      $('#saveBillButton').click(function() {
+        var amount = $('#amount').val();
+        var employeeId = $('#employeeId').val();
+        var billType = $('#billType').val();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+          url: '/bills',
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          data: { bill: { amount: amount, employee_id: employeeId, bill_type: billType } },
+          success: function(response) {
+            console.log(response);
+            $('#addBillsModal').modal('hide');
+          },
+          error: function(xhr) {
+            console.error(xhr.responseText);
+          }
+        });
+      }); 
+
+      $('#saveDepartmentButton').click(function() {
+        var departmentName = $('#departmentName').val();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+          url: '/departments',
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          data: { department: { name: departmentName } },
+          success: function(response) {
+            console.log(response);
+            $('#addDepartmentModal').modal('hide');
+          },
+          error: function(xhr) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+      $('#saveDesignationButton').click(function() {
+        var designationName = $('#designationName').val();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+          url: '/designations',
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          data: { designation: { name: designationName } },
+          success: function(response) {
+            console.log(response);
+            $('#addDesignationModal').modal('hide');
+          },
+          error: function(xhr) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+      $('#saveEmployeeButton').click(function() {
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var departmentId = $('#departmentId').val();
+        var designationId = $('#designationId').val();
+        var emailAddress = $('#emailAddress').val();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+          url: '/employees',
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          data: { employee: { first_name: firstName, last_name: lastName, department_id: departmentId, designation_id: designationId, email: emailAddress} },
+          success: function(response) {
+            console.log(response);
+            $('#addEmployeesModal').modal('hide');
+          },
+          error: function(xhr) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+    });
+
+  </script>
+  <div id="addEmployeesModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Employee</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="firstname">First Name</label>
+              <input type="text" class="form-control" id="firstName" aria-describedby="firstnameHelp" placeholder="Enter Name">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="lastname">Last Name</label>
+              <input type="text" class="form-control" id="lastName" aria-describedby="lastnameHelp" placeholder="Enter Name">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter E-mail">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="employeeDepartment">Department</label>
+              <select class="form-select" aria-label="Default select example" id="departmentId" placeholder="Select Department">
+                <option value="">Select Department</option> 
+                <% @departments.each do |department| %>
+                  <option value="<%= department.id %>"><%= department.name %></option>
+                <% end %>
+              </select>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="employeeDesigbation">Designation</label>
+              <select class="form-select" aria-label="Default select example" id="designationId">
+                <option value="">Select Designation</option> 
+                <% @designations.each do |designation| %>
+                  <option value="<%= designation.id %>"><%= designation.name %></option>
+                <% end %>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="saveEmployeeButton" type="button" class="btn btn-primary">Save</button>
+          <button id="closeEmployeeModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="addDepartmentModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Department</h5>
+        </div>
+        <div class="modal-body">
+          <form id="departmentForm">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <div class="form-group">
+              <label for="firstname">Name of Department</label>
+              <input type="text" class="form-control" id="departmentName" aria-describedby="departmentHelp" placeholder="Enter Department Name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="saveDepartmentButton" type="button" class="btn btn-primary">Save</button>
+          <button id="closeDepartmentModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="addDesignationModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Designation</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="firstname">Name of Designation</label>
+              <input type="text" class="form-control" id="designationName" aria-describedby="departmentHelp" placeholder="Enter Designation Name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="saveDesignationButton" type="button" class="btn btn-primary">Save</button>
+          <button id="closeDesignationModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="addBillsModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Bills</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="employeeId">Employee Name</label>
+              <select class="form-select" aria-label="Default select example" id="employeeId">
+                <option value="">Select Employee</option> 
+                <% @employees.each do |employee| %>
+                  <option value="<%= employee.id %>"><%= employee.first_name + ' ' + employee.last_name %></option>
+                <% end %>
+              </select>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input type="text" class="form-control" id="amount" placeholder="Enter Amount">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="billType">Type</label>
+              <select class="form-select" aria-label="Default select example" id="billType">
+                <option value="">Select Type</option>
+                <% Bill.bill_types.each do |key, value| %>
+                  <option value="<%= key %>"><%= key.capitalize %></option>
+                <% end %>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="saveBillButton" type="button" class="btn btn-primary">Save</button>
+          <button id="closeBillsModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

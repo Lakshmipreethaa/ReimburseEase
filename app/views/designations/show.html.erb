@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @designation %>
+
+<div>
+  <%= link_to "Edit this designation", edit_designation_path(@designation) %> |
+  <%= link_to "Back to designations", designations_path %>
+
+  <%= button_to "Destroy this designation", @designation, method: :delete %>
+</div>

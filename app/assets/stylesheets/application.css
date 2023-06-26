@@ -1,0 +1,61 @@
+@import "bootstrap";
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap
+ *= require_tree .
+ *= require_self
+ */
+
+
+#sidebarMenu {
+    width: 250px;
+  }
+  
+#sidebarMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 100;
+  border-right: 1px solid #ddd;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.center-button {
+  margin-left: 300px; /* Adjust this value to move the button to the right */
+}
+
+.card-button {
+  display: inline-block;
+  padding: 1px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-button button {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  cursor: pointer;
+}

@@ -11,12 +11,15 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :name, "Name of Department" %>
+    </div>
+    <%= form.text_field :name, class: "form-control", id: "name", placeholder: "Enter department Name" %>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <br>
+  <div class="modal-footer">
+    <%= button_tag "Save", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
   </div>
 <% end %>

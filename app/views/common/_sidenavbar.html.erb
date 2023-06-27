@@ -1,5 +1,8 @@
+<!DOCTYPE html>
+<html>
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://kit.fontawesome.com/782f789d60.js" crossorigin="anonymous"></script>
   <script>
     $(document).ready(function() {
       $('.list-group-item').on('click', function(event) {
@@ -22,29 +25,34 @@
     });
   </script>
 </head>
-
-<main style="margin-top: 58px;">
-  <div id="sidebarContainer" class="container pt-4">
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-      <div class="position-sticky">
-        <div class="list-group list-group-flush mx-3 mt-4">
-          <a href="/home/index" class="navbar-brand" href="#"><em class="text-danger">ReimburseEase</em></a>
-          <a href="/employees" class="list-group-item list-group-item-action py-2 ripple">
-            <i class="fas fa-chart-area fa-fw me-3"></i><span>Employees</span>
-          </a>
-          <a href="/departments" class="list-group-item list-group-item-action py-2 ripple">
-            <i class="fas fa-lock fa-fw me-3"></i><span>Departments</span>
-          </a>
-          <a href="/designations" class="list-group-item list-group-item-action py-2 ripple">
-            <i class="fas fa-chart-line fa-fw me-3"></i><span>Designations</span>
-          </a>
-          <a href="/bills" class="list-group-item list-group-item-action py-2 ripple">
-            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Bills</span>
-          </a>
+</body>
+  <main style="margin-top: 58px;">
+    <div id="sidebarContainer" class="container pt-4">
+      <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" style="border-radius: 10px;">
+        <div class="position-sticky">
+          <div class="list-group list-group-flush mx-3 mt-4">
+            <a href="/home/index" class="navbar-brand" href="#"><em class="text-danger">ReimburseEase</em></a>
+            <a href="/home/index" class="list-group-item list-group-item-action py-2 ripple">
+              <i class="fa fa-tachometer fa-fw me-3"></i><span>Dashboard</span>
+            </a>
+            <a href="/employees" class="list-group-item list-group-item-action py-2 ripple">
+              <i class="fa-regular fa-user fa-fw me-3"></i><span>Employees</span>
+            </a>
+            <a href="/departments" class="list-group-item list-group-item-action py-2 ripple">
+              <i class="fas fa-lock fa-fw me-3"></i><span>Departments</span>
+            </a>
+            <a href="/designations" class="list-group-item list-group-item-action py-2 ripple">
+              <i class="fas fa-chart-line fa-fw me-3"></i><span>Designations</span>
+            </a>
+            <a href="/bills" class="list-group-item list-group-item-action py-2 ripple">
+              <i class="fa-file-text fa-fw me-3"></i><span>Bills</span>
+            </a>
+          </div>
         </div>
-      </div>
-    </nav>
-  </div>
-  <div class="container pt-4">
-  </div>
-</main>
+      </nav>
+    </div>
+    <div class="container pt-4">
+    </div>
+  </main>
+</body>
+</html>

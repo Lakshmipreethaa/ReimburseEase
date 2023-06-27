@@ -1,0 +1,8 @@
+<% flash.each do |k, v| %>
+  <div class="row col-sm-12">
+    <div class="alert <%= "alert-info" if k == "notice" %><%= "alert-danger" if k == "error" %><%= "alert-info" if k == "alert" %><%= k %>">
+      <button class="close" aria-hidden="true" data-dismiss="alert" type="button" x></button>
+      <%= v.html_safe %>
+    </div>
+  </div>
+<% end %>

@@ -1,25 +1,22 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
+  before_action :set_topbar_data
+  before_action :set_other_values, only: :edit
 
-  # GET /employees or /employees.json
   def index
     @employees = Employee.all
   end
 
-  # GET /employees/1 or /employees/1.json
   def show
   end
 
-  # GET /employees/new
   def new
     @employee = Employee.new
   end
 
-  # GET /employees/1/edit
   def edit
   end
 
-  # POST /employees or /employees.json
   def create
     @employee = Employee.new(employee_params)
 
@@ -35,20 +32,14 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /employees/1 or /employees/1.json
   def update
-    respond_to do |format|
-      if @employee.update(employee_params)
-        format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
+    if @employee.update(employee_params)
+      redirect_to employees_path
+    else
+      redirect_to employees_path
     end
   end
 
-  # DELETE /employees/1 or /employees/1.json
   def destroy
     @employee.destroy
     Bill.where(employee_id: @employee.id).destroy_all
@@ -60,13 +51,26 @@ class EmployeesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee
-      @employee = Employee.find(params[:id])
-    end
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def employee_params
-      params.require(:employee).permit(:first_name, :last_name, :email, :department_id, :designation_id)
+  def employee_params
+    params.require(:employee).permit(:first_name, :last_name, :email, :department_id, :designation_id)
+  end
+
+  def set_topbar_data
+    @total_bills = Bill.all.count
+    amount = 0
+    Bill.all.each do |a|
+      amount = amount + a.amount
     end
+    @total_amount = amount
+    @total_employees = Employee.all.count
+  end
+
+  def set_other_values
+    @departments = Department.all
+    @designations = Designation.all
+  end
 end

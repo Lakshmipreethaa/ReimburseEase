@@ -1,0 +1,51 @@
+<div id="addEmployeesModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Employee</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="firstname">First Name</label>
+            <input type="text" class="form-control" id="firstName" aria-describedby="firstnameHelp" placeholder="Enter Name">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" id="lastName" aria-describedby="lastnameHelp" placeholder="Enter Name">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter E-mail">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="employeeDepartment">Department</label>
+            <select class="form-select" aria-label="Default select example" id="departmentId" placeholder="Select Department">
+              <option value="">Select Department</option> 
+              <% @departments.each do |department| %>
+                <option value="<%= department.id %>"><%= department.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="employeeDesigbation">Designation</label>
+            <select class="form-select" aria-label="Default select example" id="designationId">
+              <option value="">Select Designation</option> 
+              <% @designations.each do |designation| %>
+                <option value="<%= designation.id %>"><%= designation.name %></option>
+              <% end %>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="saveEmployeeButton" type="button" class="btn btn-primary">Save</button>
+        <button id="closeEmployeeModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

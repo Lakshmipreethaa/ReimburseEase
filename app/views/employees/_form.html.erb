@@ -11,32 +11,57 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :first_name, style: "display: block" %>
-    <%= form.text_field :first_name %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :first_name, style: "display: block" %>
+    </div>
+    <%= form.text_field :first_name, class: "form-control", id: "first_name", placeholder: "Enter First Name" %>
   </div>
+  <br>
 
-  <div>
-    <%= form.label :last_name, style: "display: block" %>
-    <%= form.text_field :last_name %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :last_name, style: "display: block" %>
+    </div>
+    <%= form.text_field :last_name, class: "form-control", id: "last_name", placeholder: "Enter Last Name" %>
   </div>
+  <br>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :email, style: "display: block" %>
+    </div>
+    <%= form.text_field :email, class: "form-control", id: "email", placeholder: "Enter E-mail" %>
   </div>
+  <br>
 
-  <div>
-    <%= form.label :department_id, style: "display: block" %>
-    <%= form.text_field :department_id %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :department_id, "Department" %>
+    </div>
+    <select class="form-select" id="departmentId" name="employee[department_id]">
+      <option value="<%= employee.department_id %>"><%= employee.department.name %></option>
+      <% @departments.each do |department| %>
+        <option value="<%= department.id %>"><%= department.name %></option>
+      <% end %>
+    </select>
   </div>
+  <br>
 
-  <div>
-    <%= form.label :designation_id, style: "display: block" %>
-    <%= form.text_field :designation_id %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :designation_id, "Designation" %>
+    </div>
+    <select class="form-select" id="designationId" name="employee[designation_id]">
+      <option value="<%= employee.designation_id %>"><%= employee.designation.name %></option>
+      <% @designations.each do |designation| %>
+        <option value="<%= designation.id %>"><%= designation.name %></option>
+      <% end %>
+    </select>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <br>
+  <div class="modal-footer">
+    <%= button_tag "Save", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
   </div>
 <% end %>

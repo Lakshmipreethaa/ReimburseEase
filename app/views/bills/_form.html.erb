@@ -11,22 +11,39 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :amount, style: "display: block" %>
-    <%= form.text_field :amount %>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :employee_id, "Employee Name" %>
+    </div>
+    <select class="form-select" id="employeeId" name="bill[employee_id]">
+      <option value="<%= bill.employee_id %>"><%= bill.employee.first_name + ' ' + bill.employee.last_name %></option>
+      <% @employees.each do |employee| %>
+        <option value="<%= employee.id %>"><%= employee.first_name + ' ' + employee.last_name %></option>
+      <% end %>
+    </select>
   </div>
-
-  <div>
-    <%= form.label :employee_id, style: "display: block" %>
-    <%= form.text_field :employee_id %>
+  <br>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :amount %>
+    </div>
+    <%= form.text_field :amount, class: "form-control", id: "amount", placeholder: "Enter Amount" %>
   </div>
-
-  <div>
-    <%= form.label :type, style: "display: block" %>
-    <%= form.number_field :type %>
+  <br>
+  <div class="form-group">
+    <div style="text-align: left;">
+      <%= form.label :bill_type, "Type" %>
+    </div>
+    <select class="form-select" id="billType" name="bill[bill_type]">
+      <option value="<%= bill.bill_type %>"><%= bill.bill_type.capitalize %></option>
+      <% Bill.bill_types.each do |key, value| %>
+        <option value="<%= key %>"><%= key.capitalize %></option>
+      <% end %>
+    </select>
+    <br>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="modal-footer">
+    <%= button_tag "Save", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
   </div>
 <% end %>

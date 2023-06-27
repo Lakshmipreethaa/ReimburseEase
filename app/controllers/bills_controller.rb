@@ -1,52 +1,43 @@
 class BillsController < ApplicationController
   before_action :set_bill, only: %i[ show edit update destroy ]
+  before_action :set_topbar_data
 
-  # GET /bills or /bills.json
   def index
     @bills = Bill.all
   end
 
-  # GET /bills/1 or /bills/1.json
   def show
   end
 
-  # GET /bills/new
   def new
     @bill = Bill.new
   end
 
-  # GET /bills/1/edit
   def edit
+    @employees = Employee.all
   end
 
-  # POST /bills or /bills.json
   def create
     @bill = Bill.new(bill_params)
-    respond_to do |format|
-      if @bill.save
-        format.html { redirect_to bill_url(@bill), notice: "Bill was successfully created." }
-        format.json { render :show, status: :created, location: @bill }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bill.errors, status: :unprocessable_entity }
-      end
+    if @bill.save
+      flash[:success] = 'Bill Created Successfully'
+      redirect_to bills_path
+    else
+      flash[:error] = 'Error in creating Bill'
+      redirect_to bills_path
     end
   end
 
-  # PATCH/PUT /bills/1 or /bills/1.json
   def update
-    respond_to do |format|
-      if @bill.update(bill_params)
-        format.html { redirect_to bill_url(@bill), notice: "Bill was successfully updated." }
-        format.json { render :show, status: :ok, location: @bill }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bill.errors, status: :unprocessable_entity }
-      end
+    @employees = Employee.all
+    p bill_params
+    if @bill.update(bill_params)
+      redirect_to bills_path
+    else
+      redirect_to bills_path
     end
   end
 
-  # DELETE /bills/1 or /bills/1.json
   def destroy
     @bill.destroy
 
@@ -57,13 +48,21 @@ class BillsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bill
-      @bill = Bill.find(params[:id])
-    end
+  def set_bill
+    @bill = Bill.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def bill_params
-      params.require(:bill).permit(:amount, :employee_id, :bill_type)
+  def bill_params
+    params.require(:bill).permit(:amount, :employee_id, :bill_type)
+  end
+
+  def set_topbar_data
+    @total_bills = Bill.all.count
+    amount = 0
+    Bill.all.each do |a|
+      amount = amount + a.amount
     end
+    @total_amount = amount
+    @total_employees = Employee.all.count
+  end
 end

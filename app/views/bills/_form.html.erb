@@ -18,6 +18,7 @@
     <select class="form-select" id="employeeId" name="bill[employee_id]">
       <option value="<%= bill.employee_id %>"><%= bill.employee.first_name + ' ' + bill.employee.last_name %></option>
       <% @employees.each do |employee| %>
+        <% next if employee.id == bill.employee_id %>
         <option value="<%= employee.id %>"><%= employee.first_name + ' ' + employee.last_name %></option>
       <% end %>
     </select>
@@ -37,6 +38,7 @@
     <select class="form-select" id="billType" name="bill[bill_type]">
       <option value="<%= bill.bill_type %>"><%= bill.bill_type.capitalize %></option>
       <% Bill.bill_types.each do |key, value| %>
+        <% next if key == bill.bill_type %>
         <option value="<%= key %>"><%= key.capitalize %></option>
       <% end %>
     </select>

@@ -3,7 +3,7 @@ class DesignationsController < ApplicationController
   before_action :set_topbar_data
 
   def index
-    @designations = Designation.all
+    @designations = Designation.paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -18,33 +18,31 @@ class DesignationsController < ApplicationController
 
   def create
     @designation = Designation.new(designation_params)
-
-    respond_to do |format|
-      if @designation.save
-        format.html { redirect_to designation_url(@designation), notice: "Designation was successfully created." }
-        format.json { render :show, status: :created, location: @designation }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @designation.errors, status: :unprocessable_entity }
-      end
+    if @designation.save
+      flash[:success] = "Designation created successfully"
+    else
+      flash[:danger] = "Error." + ' ' + @designation.errors.full_messages.join(", ")
     end
   end
 
   def update
     if @designation.update(designation_params)
+      flash[:success] = "Designation updated successfully"
       redirect_to designations_path
     else
+      flash[:danger] = "Error." + ' ' + @designation.errors.full_messages.join(", ")
       redirect_to designations_path
     end
   end
 
   def destroy
     employee_count = @designation.employees.count
-    if employee_count.zero?
-      @designation.destroy
-      flash[:notice] = "Designation deleted successfully"
+    if employee_count.zero? && @designation.destroy
+      flash[:success] = "Designation updated successfully"
+      redirect_to designations_path
     else
-      flash[:alert] = "Cannot delete Designation. There are #{employee_count} employees associated with it."
+      flash[:danger] = "Cannot delete Designation. There are #{employee_count} employees associated with it."
+      redirect_to designations_path
     end
   end
 

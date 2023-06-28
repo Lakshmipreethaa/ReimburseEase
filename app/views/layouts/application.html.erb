@@ -17,13 +17,28 @@
     <script src="/assets/employee.js"></script>
     <script src="/assets/bill.js"></script>
     <script src="/assets/designation.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+      .close {
+        background: none;
+        border: none;
+        padding: 0;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+    </style>
   </head>
 
   <body>
-   <% flash.each do |name,msg| %>
-       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong><%= msg %></strong>
-        </div>
+    <% flash.each do |name,msg| %>
+      <div class="alert alert-<%= name %> alert-dismissible fade show" role="alert" style="width: 500px; margin-left: 500px">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= msg %>
+      </div>
     <% end %>
     <%= yield %>
   </body>

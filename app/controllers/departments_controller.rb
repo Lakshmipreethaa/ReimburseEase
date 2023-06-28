@@ -3,7 +3,7 @@ class DepartmentsController < ApplicationController
   before_action :set_topbar_data
 
   def index
-    @departments = Department.all
+    @departments = Department.paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -18,23 +18,19 @@ class DepartmentsController < ApplicationController
 
   def create
     @department = Department.new(department_params)
-
-    respond_to do |format|
-      if @department.save
-        format.html { redirect_to department_url(@department), notice: "Department was successfully created." }
-        format.json { render :show, status: :created, location: @department }
-      else
-        p @department.errors
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @department.errors, status: :unprocessable_entity }
-      end
+    if @department.save
+      flash[:success] = "Department has been created successfully"
+    else
+      flash[:danger] = "Error," + ' ' + @department.errors.full_messages.join(", ")
     end
   end
 
   def update
     if @department.update(department_params)
+      flash[:success] = "Department has been updated successfully"
       redirect_to departments_path
     else
+      flash[:danger] = "Error" +  ' ' + @department.errors.full_messages.join(", ")
       redirect_to departments_path
     end
   end
@@ -43,9 +39,11 @@ class DepartmentsController < ApplicationController
     employee_count = @department.employees.count
     if employee_count.zero?
       @department.destroy
-      flash[:notice] = "Department deleted successfully"
+      flash[:success] = "Department deleted successfully"
+      redirect_to departments_path
     else
-      flash[:alert] = "Cannot delete Department. There are #{employee_count} employees associated with it."
+      flash[:danger] = "Cannot delete Department. There are #{employee_count} employees associated with it."
+      redirect_to departments_path
     end
   end
 

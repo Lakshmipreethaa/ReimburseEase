@@ -13,24 +13,20 @@
     <div class="card text-center" style="margin: 0 auto; width: 118%; float: left; border-radius: 10px;">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h3 class="card-title" style="text-align: left; font-family:fantasy; font-weight: 200">Departments</h3>
+          <h3 class="card-title" style="text-align: left;">Departments</h3>
         </div>
         <br>
         <table class="table table-striped table-hover rounded-table">
-          <thead class="table-light" style="color: black; font-family:fantasy; font-weight: 200">
+          <thead class="table-light" style="color: black;">
             <tr>
-              <th scope="col">S.No</th>
               <th scope="col">Department Name</th>
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
             </tr>
           </thead>
-          <tbody style="color: black; font-family:fantasy; font-weight: 200">
-            <% c=0 %>
+          <tbody style="color: black;">
             <% @departments.each do |department|%>
             <tr>
-              <% c+=1 %>
-              <th scope="row"><%= c %></th>
               <td><%= department.name %></td>
               <td>
                 <svg class="edit-button" data-department-id="<%= department.id %>" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -54,6 +50,9 @@
             <% end %>
           </tbody>
         </table>
+        <div class="pagination">
+          <%= will_paginate @bills, outer_window: 1, inner_window: 2, previous_label: '&laquo; Previous', next_label: 'Next &raquo;', class: 'pagination-links' %>
+        </div>
       </div>
     </div>
   </div>
@@ -98,6 +97,7 @@
       } else {
         console.error('Error deleting the Department:', response.status);
       }
+      location.reload();
     })
     .catch(error => {
       console.error('Error deleting the designation:', error);

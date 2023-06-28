@@ -13,30 +13,29 @@
     <div class="card text-center" style="margin: 0 auto; width: 118%; float: left; border-radius: 10px;">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h3 class="card-title" style="text-align: left; color: black; font-family:fantasy; font-weight: 200">Bills</h3>
+          <h3 class="card-title" style="text-align: left; color: black;">Bills</h3>
         </div>
         <br>
         <table class="table table-striped table-hover rounded-table">
-          <thead class="table-light" style="color: black; font-family:fantasy; font-weight: 200">
-            <tr>
-              <th scope="col">S.No</th>
-              <th scope="col">Employee Name</th>
-              <th scope="col">Type</th>
-              <th scope="col">Amount</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-
-            </tr>
-          </thead>
-          <tbody style="color: black; font-family:fantasy; font-weight: 200">
-            <% c=0 %>
+          <h1>
+            <thead class="table-light" style="color: black;">
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date of Submission</th>
+                <th scope="col">Submitted By</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+          </h1>
+          <tbody style="color: black;">
             <% @bills.each do |bill|%>
             <tr>
-              <% c+=1 %>
-              <th scope="row"><%= c %></th>
-              <td><%= bill.employee.first_name + ' '  + bill.employee.last_name %></td>
-              <td><%= bill.bill_type %></td>
+              <td><%= bill.bill_type.capitalize %></td>
               <td><%= bill.amount %></td>
+              <td><%= bill.created_at.to_date.strftime('%d-%m-%Y') %></td>
+              <td><%= bill.employee.first_name + ' '  + bill.employee.last_name %></td>
               <td>
                 <svg class="edit-button" data-bill-id="<%= bill.id %>" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="12" r="12" fill="#DAE2FF"></circle>
@@ -59,6 +58,9 @@
             <% end %>
           </tbody>
         </table>
+        <div class="pagination">
+          <%= will_paginate @bills, outer_window: 1, inner_window: 2, previous_label: '&laquo; Previous', next_label: 'Next &raquo;', class: 'pagination-links' %>
+        </div>
       </div>
     </div>
   </div>
@@ -106,6 +108,7 @@
       } else {
         console.error('Error deleting the Bill:', response.status);
       }
+      location.reload();
     })
     .catch(error => {
       console.error('Error deleting the Bill:', error);

@@ -3,7 +3,7 @@ class BillsController < ApplicationController
   before_action :set_topbar_data
 
   def index
-    @bills = Bill.all
+    @bills = Bill.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -23,7 +23,7 @@ class BillsController < ApplicationController
       flash[:success] = 'Bill Created Successfully'
       redirect_to bills_path
     else
-      flash[:error] = 'Error in creating Bill'
+      flash[:danger] = 'Error.' + ' ' + @bill.errors.full_messages.join(", ")
       redirect_to bills_path
     end
   end
@@ -32,18 +32,21 @@ class BillsController < ApplicationController
     @employees = Employee.all
     p bill_params
     if @bill.update(bill_params)
+      flash[:success] = 'Bill updated Successfully'
       redirect_to bills_path
     else
+      flash[:danger] = 'Error.' + ' ' +@bill.errors.full_messages.join(", ")
       redirect_to bills_path
     end
   end
 
   def destroy
-    @bill.destroy
-
-    respond_to do |format|
-      format.html { redirect_to bills_url, notice: "Bill was successfully destroyed." }
-      format.json { head :no_content }
+    if @bill.destroy
+      flash[:success] = 'Bill deleted Successfully'
+      redirect_to bills_path
+    else
+      flash[:danger] = 'Error.' + ' ' + @bill.errors.full_messages.join(", ")
+      redirect_to bills_path
     end
   end
 

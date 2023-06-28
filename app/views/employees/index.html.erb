@@ -12,22 +12,23 @@
     <div class="card text-center" style="margin: 0 auto; width: 118%; float: left; border-radius: 10px;">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h5 class="card-title" style="text-align: left; font-family:fantasy; font-weight: 200">Employee Details</h5>
+          <h5 class="card-title" style="text-align: left;">Employee Details</h5>
         </div>
         <br>
         <table class="table table-striped table-hover rounded-table">
-          <thead class="table-light" style="color: black; font-family:fantasy; font-weight: 200">
-            <tr>
-              <th scope="col">Email Address</th>
-              <th scope="col">Name</th>
-              <th scope="col">Department Name</th>
-              <th scope="col">Designation Name</th>
-              <th scope="col">Edit User</th>
-              <th scope="col">Delete User</th>
-            </tr>
-          </thead>
-          <tbody style="color: black; font-family:fantasy; font-weight: 200">
-            <% c=0 %>
+          <h1>
+            <thead class="table-light" style="color: black;">
+              <tr>
+                <th scope="col">Email Address</th>
+                <th scope="col">Name</th>
+                <th scope="col">Department Name</th>
+                <th scope="col">Designation Name</th>
+                <th scope="col">Edit User</th>
+                <th scope="col">Delete User</th>
+              </tr>
+            </thead>
+          </h1>
+          <tbody style="color: black;">
             <% @employees.each do |employee|%>
             <tr>
               <td><%= employee.email %></td>
@@ -56,6 +57,9 @@
             <% end %>
           </tbody>
         </table>
+        <div class="pagination">
+          <%= will_paginate @bills, outer_window: 1, inner_window: 2, previous_label: '&laquo; Previous', next_label: 'Next &raquo;', class: 'pagination-links' %>
+        </div>
       </div>
     </div>
   </div>
@@ -102,6 +106,7 @@
       } else {
         console.error('Error deleting the Employee:', response.status);
       }
+      location.reload();
     })
     .catch(error => {
       console.error('Error deleting the Employee:', error);

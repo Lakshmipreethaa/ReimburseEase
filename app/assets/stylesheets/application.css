@@ -39,7 +39,7 @@
 }
 
 .center-button {
-  margin-left: 300px; /* Adjust this value to move the button to the right */
+  margin-left: 300px;
 }
 
 .card-button {
@@ -59,3 +59,14 @@
   padding: 10px;
   cursor: pointer;
 }
+
+.custom-line {
+  border: none;
+  height: 1px;
+  background-color: #000000;
+}
+
+.alert {
+  opacity: 0.8;
+}
+

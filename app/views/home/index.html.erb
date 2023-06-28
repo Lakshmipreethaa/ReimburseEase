@@ -32,46 +32,48 @@
 
   <div class="card-container">
     <div class="card-button" style="margin-left: 270px; margin-top: -10px; width: 265px; background-color: #e2eef6;">
-      <button id="addEmployeesButton" type="button" class="btn btn-info btn-lg" style="color: black; font-family:fantasy; font-weight: 600" data-form-url="<%= new_employee_path %>">Add Employees</button>
+      <button id="addEmployeesButton" type="button" class="btn btn-info btn-lg" style="color: black; data-form-url="<%= new_employee_path %>">Add Employees</button>
     </div>
     <div class="card-button" style="margin-left: 10px; margin-top: 20px; width: 265px; background-color: #e2eef6;">
-      <button id="addDepartmentButton" type="button" class="btn btn-info btn-lg" style="color: black; font-family:fantasy; font-weight: 600" data-form-url="<%= new_department_path %>">Add Department</button>
+      <button id="addDepartmentButton" type="button" class="btn btn-info btn-lg" style="color: black; data-form-url="<%= new_department_path %>">Add Department</button>
     </div>
     <div class="card-button" style="margin-left: 10px; margin-top: -10px; width: 265px; background-color: #e2eef6;">
-      <button id="addDesignationButton" type="button" class="btn btn-info btn-lg" style="color: black; font-family:fantasy; font-weight: 600" data-form-url="<%= new_designation_path %>">Add Designation</button>
+      <button id="addDesignationButton" type="button" class="btn btn-info btn-lg" style="color: black; data-form-url="<%= new_designation_path %>">Add Designation</button>
     </div>
     <div class="card-button" style="margin-left: 10px; margin-top: -10px; width: 265px; background-color: #e2eef6;">
-      <button id="addBillsButton" type="button" class="btn btn-info btn-lg" style="color: black; font-family:fantasy; font-weight: 600" data-form-url="<%= new_bill_path %>">Add Bills</button>
+      <button id="addBillsButton" type="button" class="btn btn-info btn-lg" style="color: black; data-form-url="<%= new_bill_path %>">Add Bills</button>
     </div>
   </div>
   <div class="container-fluid col-8" style="margin-top: 30px; margin-left: 260px; margin-right: auto;">
     <div class="card text-center" style="margin: 0 auto; width: 118%; float: left; border-radius: 10px;">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h3 class="card-title" style="color: black; font-family:fantasy; font-weight: 600; text-align: left;">Recent Bills</h3>
+          <h3 class="card-title" style="color: black; text-align: left;">Recent Bills</h3>
           <button class="btn btn-secondary btn-sm" onclick="location.href='<%= bills_path %>'">View All</button>
         </div>
         <br>
           <table class="table table-striped table-hover rounded-table">
           <thead class="table-light">
-          <h4>
-            <tr style="color: black; font-family:fantasy; font-weight: 800">
+          <h1>
+            <tr style="color: black;">
               <th scope="col">S.No</th>
-              <th scope="col">Employee Name</th>
               <th scope="col">Type</th>
               <th scope="col">Amount</th>
+              <th scope="col">Date of Submission</th>
+              <th scope="col">Submitted By</th>
             </tr>
-          </h4>
+          </h1>
           </thead>
-          <tbody style="color: black; font-family:fantasy; font-weight: 200">
+          <tbody style="color: black;">
             <% c=0 %>
             <% @bills.each do |bill|%>
             <tr>
               <% c+=1 %>
               <th scope="row"><%= c %></th>
-              <td><%= bill.employee.first_name + ' '  + bill.employee.last_name %></td>
-              <td><%= bill.bill_type %></td>
+              <td><%= bill.bill_type.capitalize %></td>
               <td><%= bill.amount %></td>
+              <td><%= bill.created_at.to_date.strftime('%d-%m-%Y') %></td>
+              <td><%= bill.employee.first_name + ' '  + bill.employee.last_name %></td>
             </tr>
             <% end %>
           </tbody>

@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <%= render "common/sidenavbar"%>
+    <%= render "common/topbar"%>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      var dataset = <%= raw(@item_dataset.to_json) %>;
+      var department_dataset = <%= raw(@department_dataset.to_json) %>;
+      var monthly_dataset = <%= raw(@monthly_dataset.to_json) %>;
+    </script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(dataset);
+
+        var options = {
+          title: 'Item Based Bill Report',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable(department_dataset);
+        var options = {title: 'Amount (in Rs)'}; 
+        var chart = new google.visualization.BarChart(document.getElementById('department_chart'));
+        chart.draw(data, options);
+      };
+    </script>
+    <script type = "text/javaScript">
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        console.log("hello", monthly_dataset)
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Month');
+        data.addColumn('number', 'Travel');
+        data.addColumn('number', 'Medicare');
+        data.addColumn('number', 'Insurance');
+        data.addColumn('number', 'Food');
+        data.addColumn('number', 'Others');
+        data.addRows(monthly_dataset);
+
+        var options = {
+          chart: {
+            title: 'Monthly Bill Report',
+          },
+          width: 1100,
+          height: 300
+        };
+
+        var chart = new google.charts.Line(document.getElementById('monthly_chart'));
+
+        chart.draw(data, google.charts.Line.convertOptions(options));
+      }
+    </script>
+  </head>
+  <body style = "background-color: #ededeb;">
+    <div id="donutchart" style="width: 550px; height: 290px; margin-top: 330px; margin-left: 270px; margin-right: auto;"></div>
+    <div id="department_chart" style="width: 550px; height: 290px; margin-top: -290px; margin-left: 830px; margin-right: auto;"></div>
+    <div id="monthly_chart" style="width: 100px; height: 50%; margin-top: -610px; margin-left: 270px; margin-right: auto;"></div>
+  </body>
+</html>

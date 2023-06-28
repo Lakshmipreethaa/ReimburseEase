@@ -42,6 +42,7 @@
     <select class="form-select" id="departmentId" name="employee[department_id]">
       <option value="<%= employee.department_id %>"><%= employee.department.name %></option>
       <% @departments.each do |department| %>
+        <% next if department.id == employee.department_id %>
         <option value="<%= department.id %>"><%= department.name %></option>
       <% end %>
     </select>
@@ -55,6 +56,7 @@
     <select class="form-select" id="designationId" name="employee[designation_id]">
       <option value="<%= employee.designation_id %>"><%= employee.designation.name %></option>
       <% @designations.each do |designation| %>
+        <% next if designation.id == employee.designation_id %>
         <option value="<%= designation.id %>"><%= designation.name %></option>
       <% end %>
     </select>

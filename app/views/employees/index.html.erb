@@ -21,8 +21,8 @@
               <tr>
                 <th scope="col">Email Address</th>
                 <th scope="col">Name</th>
-                <th scope="col">Department Name</th>
-                <th scope="col">Designation Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Designation</th>
                 <th scope="col">Edit User</th>
                 <th scope="col">Delete User</th>
               </tr>
@@ -32,7 +32,7 @@
             <% @employees.each do |employee|%>
             <tr>
               <td><%= employee.email %></td>
-              <td><%= employee.first_name %></td>
+              <td><%= employee.first_name.capitalize +  ' ' + employee.last_name.capitalize%></td>
               <td><%= employee.department.name %></td>
               <td><%= employee.designation.name %></td>
               <td>

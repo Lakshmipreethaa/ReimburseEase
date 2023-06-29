@@ -19,7 +19,7 @@ class DepartmentsController < ApplicationController
   def create
     @department = Department.new(department_params)
     if @department.save
-      flash[:success] = "Department has been created successfully"
+      flash[:success] = "Department created successfully"
     else
       flash[:danger] = "Error," + ' ' + @department.errors.full_messages.join(", ")
     end
@@ -27,10 +27,10 @@ class DepartmentsController < ApplicationController
 
   def update
     if @department.update(department_params)
-      flash[:success] = "Department has been updated successfully"
+      flash[:success] = "Department updated successfully"
       render json: { success: true, flash_message: flash[:success] }
     else
-      flash[:danger] = "Error" +  ' ' + @department.errors.full_messages.join(", ")
+      flash[:danger] = "Error." +  ' ' + @department.errors.full_messages.join(", ")
       render json: { success: false, flash_message: flash.now[:danger] }
     end
   end

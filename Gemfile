@@ -48,7 +48,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'faker', '2.2.1'
 gem 'shoulda-matchers'
-
+gem 'rails-controller-testing'
 # Use Sass to process CSS
 # gem "sassc-rails"
 

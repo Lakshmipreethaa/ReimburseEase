@@ -38,7 +38,7 @@ class DesignationsController < ApplicationController
   def destroy
     employee_count = @designation.employees.count
     if employee_count.zero? && @designation.destroy
-      flash[:success] = "Designation updated successfully"
+      flash[:success] = "Designation deleted successfully"
       redirect_to designations_path
     else
       flash[:danger] = "Cannot delete Designation. There are #{employee_count} employees associated with it."

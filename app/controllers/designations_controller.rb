@@ -28,10 +28,10 @@ class DesignationsController < ApplicationController
   def update
     if @designation.update(designation_params)
       flash[:success] = "Designation updated successfully"
-      redirect_to designations_path
+      render json: { success: true, flash_message: flash[:success] }
     else
       flash[:danger] = "Error." + ' ' + @designation.errors.full_messages.join(", ")
-      redirect_to designations_path
+      render json: { success: false, flash_message: flash.now[:danger] }
     end
   end
 

@@ -30,13 +30,12 @@ class BillsController < ApplicationController
 
   def update
     @employees = Employee.all
-    p bill_params
     if @bill.update(bill_params)
       flash[:success] = 'Bill updated Successfully'
-      redirect_to bills_path
+      render json: { success: true, flash_message: flash[:success] }
     else
       flash[:danger] = 'Error.' + ' ' +@bill.errors.full_messages.join(", ")
-      redirect_to bills_path
+      render json: { success: false, flash_message: flash.now[:danger] }
     end
   end
 

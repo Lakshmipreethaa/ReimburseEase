@@ -28,10 +28,10 @@ class DepartmentsController < ApplicationController
   def update
     if @department.update(department_params)
       flash[:success] = "Department has been updated successfully"
-      redirect_to departments_path
+      render json: { success: true, flash_message: flash[:success] }
     else
       flash[:danger] = "Error" +  ' ' + @department.errors.full_messages.join(", ")
-      redirect_to departments_path
+      render json: { success: false, flash_message: flash.now[:danger] }
     end
   end
 

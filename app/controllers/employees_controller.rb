@@ -31,10 +31,10 @@ class EmployeesController < ApplicationController
   def update
     if @employee.update(employee_params)
       flash[:success] = "Employee has been updated successfully"
-      redirect_to employees_path
+      render json: { success: true, flash_message: flash[:success] }
     else
       flash[:danger] = "Error" + ' ' + @employee.errors.full_messages.join(", ")
-      redirect_to employees_path
+      render json: { success: false, flash_message: flash.now[:danger] }
     end
   end
 

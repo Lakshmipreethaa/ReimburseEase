@@ -62,17 +62,39 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const editButtons = document.querySelectorAll('.edit-button');
-    const employeeContainer = document.getElementById('employeeContainer');
 
     editButtons.forEach(function(editButton) {
       editButton.addEventListener('click', function() {
         const departmentId = this.dataset.departmentId;
+        const modalBody = document.querySelector('#editDepartmentsModal .modal-body');
         const xhr = new XMLHttpRequest();
         xhr.open('GET', '/departments/' + departmentId + '/edit');
         xhr.onload = function() {
           if (xhr.status === 200) {
-            const modalBody = document.querySelector('#editDepartmentsModal .modal-body');
             modalBody.innerHTML = xhr.responseText;
+            const form = modalBody.querySelector('form');
+            form.addEventListener('submit', function(event) {
+              event.preventDefault();
+              const formData = new FormData(form);
+              const xhr = new XMLHttpRequest();
+              xhr.open('PATCH', '/departments/' + departmentId);
+              xhr.setRequestHeader('Accept', 'application/json');
+              xhr.onload = function() {
+                if (xhr.status === 200) {
+                  const response = JSON.parse(xhr.responseText);
+                  if (response.success) {
+                    $('#editDepartmentsModal').modal('hide');
+                    location.reload();
+                  } else {
+                    const errorDiv = form.querySelector('.errors');
+                    errorDiv.innerHTML = response.errors.join(', ');
+                  }
+                } else {
+                  console.error('Request failed. Status: ' + xhr.status);
+                }
+              };
+              xhr.send(formData);
+            });
             $('#editDepartmentsModal').modal('show');
           } else {
             console.error('Request failed. Status: ' + xhr.status);

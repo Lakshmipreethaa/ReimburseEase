@@ -64,22 +64,41 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const editButtons = document.querySelectorAll('.edit-button');
-    const employeeContainer = document.getElementById('employeeContainer');
 
     editButtons.forEach(function(editButton) {
       editButton.addEventListener('click', function() {
         const designationId = this.dataset.designationId;
-        
-        // Make an AJAX request to fetch the partial content
+        const modalBody = document.querySelector('#editDesignationsModal .modal-body');
+
         const xhr = new XMLHttpRequest();
         xhr.open('GET', '/designations/' + designationId + '/edit');
         xhr.onload = function() {
           if (xhr.status === 200) {
-            // Set the received partial content as the innerHTML of the modal body
             const modalBody = document.querySelector('#editDesignationsModal .modal-body');
             modalBody.innerHTML = xhr.responseText;
-            
-            // Show the modal
+            const form = modalBody.querySelector('form');
+            form.addEventListener('submit', function(event) {
+              event.preventDefault();
+              const formData = new FormData(form);
+              const xhr = new XMLHttpRequest();
+              xhr.open('PATCH', '/designations/' + designationId);
+              xhr.setRequestHeader('Accept', 'application/json');
+              xhr.onload = function() {
+                if (xhr.status === 200) {
+                  const response = JSON.parse(xhr.responseText);
+                  if (response.success) {
+                    $('#editDesignationsModal').modal('hide');
+                    location.reload();
+                  } else {
+                    const errorDiv = form.querySelector('.errors');
+                    errorDiv.innerHTML = response.errors.join(', ');
+                  }
+                } else {
+                  console.error('Request failed. Status: ' + xhr.status);
+                }
+              };
+              xhr.send(formData);
+            });
             $('#editDesignationsModal').modal('show');
           } else {
             console.error('Request failed. Status: ' + xhr.status);

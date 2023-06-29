@@ -7,22 +7,22 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="firstname">First Name</label>
+            <label for="firstname">First Name<span style="color: red;"> *</span></label>
             <input type="text" class="form-control" id="firstName" aria-describedby="firstnameHelp" placeholder="Enter Name">
           </div>
           <br>
           <div class="form-group">
-            <label for="lastname">Last Name</label>
+            <label for="lastname">Last Name<span style="color: red;"> *</span></label>
             <input type="text" class="form-control" id="lastName" aria-describedby="lastnameHelp" placeholder="Enter Name">
           </div>
           <br>
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
+            <label for="exampleInputEmail1">Email address<span style="color: red;"> *</span></label>
             <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter E-mail">
           </div>
           <br>
           <div class="form-group">
-            <label for="employeeDepartment">Department</label>
+            <label for="employeeDepartment">Department<span style="color: red;"> *</span></label>
             <select class="form-select" aria-label="Default select example" id="departmentId" placeholder="Select Department">
               <option value="">Select Department</option> 
               <% @departments.each do |department| %>
@@ -32,7 +32,7 @@
           </div>
           <br>
           <div class="form-group">
-            <label for="employeeDesigbation">Designation</label>
+            <label for="employeeDesigbation">Designation<span style="color: red;"> *</span></label>
             <select class="form-select" aria-label="Default select example" id="designationId">
               <option value="">Select Designation</option> 
               <% @designations.each do |designation| %>

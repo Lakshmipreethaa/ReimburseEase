@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <div style="text-align: left;">
-      <%= form.label :employee_id, "Employee Name" %>
+      <%= form.label :employee_id, "Employee Name" %><span style="color: red;"> *</span>
     </div>
     <select class="form-select" id="employeeId" name="bill[employee_id]">
       <option value="<%= bill.employee_id %>"><%= bill.employee.first_name + ' ' + bill.employee.last_name %></option>
@@ -26,14 +26,14 @@
   <br>
   <div class="form-group">
     <div style="text-align: left;">
-      <%= form.label :amount %>
+      <%= form.label :amount %><span style="color: red;"> *</span>
     </div>
     <%= form.text_field :amount, class: "form-control", id: "amount", placeholder: "Enter Amount" %>
   </div>
   <br>
   <div class="form-group">
     <div style="text-align: left;">
-      <%= form.label :bill_type, "Type" %>
+      <%= form.label :bill_type, "Type" %><span style="color: red;"> *</span>
     </div>
     <select class="form-select" id="billType" name="bill[bill_type]">
       <option value="<%= bill.bill_type %>"><%= bill.bill_type.capitalize %></option>

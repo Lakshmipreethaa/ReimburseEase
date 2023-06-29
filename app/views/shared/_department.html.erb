@@ -8,7 +8,7 @@
         <form id="departmentForm">
           <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <div class="form-group">
-            <label for="firstname">Name of Department</label>
+            <label for="firstname">Name of Department<span style="color: red;"> *</span></label>
             <input type="text" class="form-control" id="departmentName" aria-describedby="departmentHelp" placeholder="Enter Department Name">
           </div>
         </form>

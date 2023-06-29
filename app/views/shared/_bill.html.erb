@@ -7,7 +7,7 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="employeeId">Employee Name</label>
+            <label for="employeeId">Employee Name <span style="color: red;"> *</span></label>
             <select class="form-select" aria-label="Default select example" id="employeeId">
               <option value="">Select Employee</option> 
               <% @employees.each do |employee| %>
@@ -17,12 +17,12 @@
           </div>
           <br>
           <div class="form-group">
-            <label for="amount">Amount</label>
+            <label for="amount">Amount <span style="color: red;"> *</span></label>
             <input type="text" class="form-control" id="amount" placeholder="Enter Amount">
           </div>
           <br>
           <div class="form-group">
-            <label for="billType">Type</label>
+            <label for="billType">Type<span style="color: red;"> *</span></label>
             <select class="form-select" aria-label="Default select example" id="billType">
               <option value="">Select Type</option>
               <% Bill.bill_types.each do |key, value| %>

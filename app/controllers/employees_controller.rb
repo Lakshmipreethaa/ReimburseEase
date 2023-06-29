@@ -39,8 +39,8 @@ class EmployeesController < ApplicationController
   end
 
   def destroy
-    employee_bill = Bill.where(employee_id: @employee.id).destroy_all
     if @employee.destroy && employee_bill
+      employee_bill = Bill.where(employee_id: @employee.id).destroy_all
       flash[:success] = "Employee has been deleted successfully"
       redirect_to employees_path
     else

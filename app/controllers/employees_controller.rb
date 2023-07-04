@@ -1,10 +1,10 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: %i[ show edit update destroy ]
+  before_action :set_employee, only: %i[ show edit update destroy delete_employee]
   before_action :set_topbar_data
   before_action :set_other_values, only: :edit
 
   def index
-    @employees = Employee.paginate(page: params[:page], per_page: 10)
+    @employees = Employee.where(is_deleted: false).paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -35,6 +35,16 @@ class EmployeesController < ApplicationController
     else
       flash[:danger] = "Error" + ' ' + @employee.errors.full_messages.join(", ")
       render json: { success: false, flash_message: flash.now[:danger] }
+    end
+  end
+
+  def delete_employee
+    if @employee.update(is_deleted: true)
+      flash[:success] = "Employee has been deleted successfully"
+      redirect_to employees_path
+    else
+      flash[:danger] = "Error." + ' ' + @employee.errors.full_messages.join(", ")
+      redirect_to employees_path
     end
   end
 

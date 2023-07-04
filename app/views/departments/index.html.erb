@@ -27,7 +27,7 @@
           <tbody style="color: black;">
             <% @departments.each do |department|%>
             <tr>
-              <td><%= department.name %></td>
+              <td><%= department.name + ' ' + "(#{department.employees.count})" %></td>
               <td>
                 <svg class="edit-button" data-department-id="<%= department.id %>" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="12" r="12" fill="#DAE2FF"></circle>
